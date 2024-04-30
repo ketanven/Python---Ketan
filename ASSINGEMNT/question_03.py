@@ -1,6 +1,4 @@
-
 num = int(input("Enter the maximum value for Fibonacci series: "))
-
 # Initialize the first two numbers in the Fibonacci sequence
 a, b = 0, 1
 
@@ -12,5 +10,4 @@ while a <= num:
     # Break the loop if the next Fibonacci number exceeds the maximum value
     if a > num:
         break
-
 print()  # Move to the next line after printing the series
