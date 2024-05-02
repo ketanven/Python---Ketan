@@ -2,15 +2,15 @@
 # separated by a space and swap the first two characters of each string
 
 # Input strings
-string1 = input("Enter the first string: ")
-string2 = input("Enter the second string: ")
+input1 = input("Enter the first string: ")
+input2 = input("Enter the second string: ")
 
 # Swapping the first two characters
-new_string1 = string2[:2] + string1[2:]
-new_string2 = string1[:2] + string2[2:]
+newstring1 = input2[:2] + input1[2:]
+newstring2 = input1[:2] + input2[2:]
 
 # Concatenating the strings with a space
-result = new_string1 + ' ' + new_string2
+output = newstring1 + ' ' + newstring2
 
 # Displaying the result
-print("Result:", result)
+print("Result:", output)
