@@ -1,0 +1,9 @@
+file = open("C:\\Users\\LENOVO\\Desktop\\Python---Ketan\\CLASS WORK\\11-05-24\\test3.txt","r+")
+
+print(file.read())
+
+
+
+file.write("\nHIIII I M AN  R+ method*********")
+
+file.close()
