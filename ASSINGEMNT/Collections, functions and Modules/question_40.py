@@ -1,4 +1,4 @@
-# 
+# Write a Python function to check whether a number is in a given range
 
 
 def check(number, start, end):
