@@ -1,0 +1,7 @@
+{'Account Number': 101, 'Name': 'ketan', 'Balance': 2000, 'Transaction Type': 'Add Customer', 'Amount': 2000, 'Date': '2024-05-21 21:17:05'}
+{'Account Number': 102, 'Name': 'uday', 'Balance': 1000, 'Transaction Type': 'Add Customer', 'Amount': 1000, 'Date': '2024-05-21 21:17:13'}
+{'Account Number': 101, 'Name': 'ketan', 'Balance': 2100.0, 'Transaction Type': 'Deposit', 'Amount': 100.0, 'Date': '2024-05-21 21:17:23'}
+{'Account Number': 101, 'Name': 'ketan', 'Balance': 1800.0, 'Transaction Type': 'Withdrawal', 'Amount': 300.0, 'Date': '2024-05-21 21:17:35'}
+{'Account Number': 103, 'Name': 'Pillai', 'Balance': 2000, 'Transaction Type': 'Add Customer', 'Amount': 2000, 'Date': '2024-05-21 21:20:07'}
+{'Account Number': 104, 'Name': 'Rajput Uday', 'Balance': 900, 'Transaction Type': 'Add Customer', 'Amount': 900, 'Date': '2024-05-21 21:24:18'}
+{'Account Number': 105, 'Name': 'Raj', 'Balance': 2900, 'Transaction Type': 'Add Customer', 'Amount': 2900, 'Date': '2024-05-21 21:27:04'}
