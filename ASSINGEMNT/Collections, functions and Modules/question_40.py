@@ -10,11 +10,11 @@ def check(number, start, end):
 
 # Ask the user for input
 num = int(input("Enter a number: "))
-start_range = int(input("Enter the start of the range: "))
-end_range = int(input("Enter the end of the range: "))
+start = int(input("Enter the start of the range: "))
+end= int(input("Enter the end of the range: "))
 
 # Check if the number is in the range and print the result
-if check(num, start_range, end_range):
-    print(f"{num} is in the range from {start_range} to {end_range}")
+if check(num, start, end):
+    print(f"{num} is in the range from {start} to {end}")
 else:
-    print(f"{num} is not in the range from {start_range} to {end_range}")
+    print(f"{num} is not in the range from {start} to {end}")

@@ -1,22 +1,20 @@
 # Write a Python program to find the highest 3 values in a dictionary
 
-
 # Sample dictionary
-my_dict = {'a': 10, 'b': 30, 'c': 20, 'd': 50, 'e': 40}
+mydict = {1: "ketan", 2: "Uday", 3: "Pillai", 4: "Rajput", 5: "Raj"}
 
-# Get the values from the dictionary
-values = list(my_dict.values())
+# Function to get the value for sorting
+def value(item):
+    return item[1]
 
-# Sort the values in descending order
-values.sort(reverse=True)
+# Sort the dictionary items by value in descending order using the custom function
+sorted = sorted(mydict.items(), key=value, reverse=True)
 
-# Get the highest 3 values
-highest_values = values[:3]
-
-# Find the keys corresponding to the highest values
-highest_keys = [key for key, value in my_dict.items() if value in highest_values]
+# Get the highest 3 items
+highest = sorted[:3]
 
 # Print the highest 3 values and their keys
 print("Highest 3 values in the dictionary:")
-for key, value in zip(highest_keys, highest_values):
-    print(key, "=", value)
+for i, j in highest:
+    print(i, "=", j)
+

@@ -1,6 +1,6 @@
 #Write a Python program to returns sum of all divisors of a number
 
-def sum_of_divisors(number):
+def sumofdivisors(number):
     # Initialize sum
     divisors_sum = 0
     # Find all divisors
@@ -13,4 +13,4 @@ def sum_of_divisors(number):
 num = int(input("Enter a number: "))
 
 # Calculate and print the sum of divisors
-print("Sum of divisors of", num, "is", sum_of_divisors(num))
+print("Sum of divisors of", num, "is", sumofdivisors(num))
