@@ -17,7 +17,7 @@ max_num, min_num = maxmin(numbers)
 
 # Print the maximum and minimum numbers
 print()
-print("Maximum number:", max_num)
+print("Maximum number:", max_num)   
 print()
 print("Minimum number:", min_num)
 

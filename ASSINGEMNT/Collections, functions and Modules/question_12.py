@@ -1,4 +1,5 @@
-#Write a Python program to check whether a list contains a sub list
+#Write a Python program to check whether a 
+# list contains a sub list
 
 
 # Main list

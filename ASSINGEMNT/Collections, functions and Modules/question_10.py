@@ -1,4 +1,5 @@
-#Write a Python program to find the second smallest number in a list.
+#Write a Python program to find the second smallest 
+# number in a list.
 
 # List of numbers
 numbers = [12, 5, 7, 1, 18, 9, 3, 15, 8, 4]
