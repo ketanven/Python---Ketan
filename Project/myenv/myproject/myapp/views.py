@@ -55,3 +55,22 @@ def signup(request):
     else:
         return render(request,'signup.html')
     
+def login(request):
+    if request.method == "POST":
+        try:
+            user = User.objects.get(email = request.POST['email'])
+            
+            if user.password == request.POST['password']:
+                request.session['email']= user.email
+                return render(request,'index.html')
+            else:
+                msg = "Password doesn't match !!"
+                return render(request,'login.html',{'msg':msg})
+        except:
+            msg = "Email dosen't match !!"
+            return render(request,'login.html',{'msg':msg})
+            
+    
+    else:
+        return render(request,'login.html')
+        

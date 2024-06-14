@@ -31,11 +31,18 @@
 		<!-- Start Contact Form -->
 		<div class="untree_co-section">
             <div class="container">
+              {% if msg %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>{{msg}}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
 
            
 
 
-              <form>
+              <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
                 <div class="row">
                   
                   <div class="col-6 offset-3">
@@ -55,7 +62,7 @@
                     </div>
                     
                 </div>
-                <button type="submit" class="btn btn-primary-hover-outline mt-3 offset-5">Sign Up </button>
+                <button type="submit" class="btn btn-primary-hover-outline mt-3 offset-5">Login</button>
               </form>
             </div>
 
