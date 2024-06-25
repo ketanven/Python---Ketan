@@ -86,10 +86,24 @@
                 </div>
               </div>
 
-              <form method="post" action="{% url 'signup' %}">
+              <form method="post" action="{% url 'signup' %}" enctype="multipart/form-data">
              {% csrf_token %}
                 <div class="row">
+                  <div class="col-12">
+                    <div class="table">
+                      <tr>
+                          <td>
+                              Upload Your Profile Pic   
+                          </td>
+                          <td>
+                              <input name="profile" class="m-2" type="file">
+                          </td>
+                      </tr>
+                  
+                       </div>
+                  </div>
                   <div class="col-6">
+                    
                     <div class="form-group">
                       <label class="text-black" for="name">Full name</label>
                       <input type="text" name="name" class="form-control" id="fname">

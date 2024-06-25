@@ -27,7 +27,13 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),  # for contact.html
     path('cart/', views.cart, name='cart'), 
     path('login/', views.login, name='login'), 
+    path('logout/', views.logout, name='logout'),
+    path('cpass/', views.cpass, name='cpass'),
     path('signup/', views.signup, name='signup'),
+    path('fpass/', views.fpass, name='fpass'),
+    path('otp/', views.otp, name='otp'),
+    path('profile/', views.profilepage, name='profilepage'),
+
 
 ]
 
