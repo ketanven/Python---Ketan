@@ -90,6 +90,18 @@
              {% csrf_token %}
                 <div class="row">
                   <div class="col-12">
+                    <div class="dropdown mb-2">
+                      <label class="h4" for="">
+                        Select Role
+                        <select name="usertype" style="appearance: none;" class="btn btn-secondary mt-3 p-3 w-100 " type="button">
+                          
+                          <option class="btn btn-secondary text-center" value="buyer">Buyer</option>
+                          <option class="btn btn-secondary text-center" value="seller" >Seller</option>
+                          
+                          
+                        </select>
+                      </label>
+                    </div>
                     <div class="table">
                       <tr>
                           <td>
@@ -145,6 +157,7 @@
                           </div>
                         
                     </div> 
+                    
                 </div>
                 
                

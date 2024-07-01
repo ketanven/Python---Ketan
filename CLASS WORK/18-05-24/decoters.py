@@ -13,3 +13,21 @@ def fac():
         fac*=i
     
     print(fac)
+    
+    
+
+
+
+def fun1(show):
+    def fun2():
+        print("welcome")
+        show()
+        print("exited")
+    
+    fun2()
+@fun1
+def fun3():
+    print("hoiii")
+
+    
+        

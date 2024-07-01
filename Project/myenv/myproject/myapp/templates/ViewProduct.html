@@ -1,0 +1,84 @@
+{% extends 'SellerHeader.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<title>Well Furni</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+
+<body>
+    <div class="hero">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <div class="intro-excerpt">
+                        <h1>View Your Products</h1>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="untree_co-section product-section before-footer-section">
+        <div class="container">
+            <div class="row">
+                {% for i in product %}
+                <div class="col-12  col-md-4 col-lg-3 mb-5">
+                    <a class="product-item" href="{% url 'viewproduct' %}" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <img style="height: 200px;width: 250px;" src="{{ i.productimage.url }}" class="img-fluid product-thumbnail">
+                        <h3 class="product-title">{{ i.productname }}</h3>
+                        <strong class="product-price">${{ i.pprice }}</strong>
+                        <h5>{{ i.pdesc }}</h5>
+                        
+                        <span class="icon-cross">
+                            <img src="{% static 'images/cross.svg' %}" class="img-fluid">
+                        </span>
+                    </a>
+                </div>
+                {% endfor %}
+
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Product Title</h4>
+                                <a href="" type="button" class="btn-close" data-bs-dismiss="modal"></a>
+                            </div>
+
+                            <div class="modal-body">
+                                <img id="modalProductImage" class="img-fluid mx-5 mb-3" style="height: 350px;width: 80%;display: flex;justify-content: center;" src="{% static "images/product-3.png" %}">
+                                <p class="h5 text-black" id="">Product Category   : <span>show here</span> </p>
+
+                                <p class="h5 text-black" id="">Product Description   : <span>show here</span> </p>
+                                <p class="h5 text-black" id="">Product Price   : <span>show here</span> </p>
+                                <a type="button" class="btn btn-danger bg-success mx-4 mt-4">Update Product</a>
+                                <a type="button" class="btn btn-danger bg-success mx-4 mt-4">Delete Product</a>
+
+                                
+
+
+                                
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/tiny-slider.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>
+{% endblock %}

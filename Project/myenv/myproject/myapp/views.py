@@ -32,19 +32,29 @@ def profilepage(request):
     user = User.objects.get(email=request.session['email'])
     
     if request.method == "POST":
-        user.name = request.POST.get('name', user.name)
-        user.email = request.POST.get('email', user.email)
-        user.mobile = request.POST.get('mobile', user.mobile)
-        user.countryName = request.POST.get('countryName', user.countryName)
+        user.name = request.POST['name']
+        user.email = request.POST['email']
+        user.mobile = request.POST['mobile']
+        user.countryName = request.POST['countryName']
         
-        # Handle profile picture upload
-        if 'profile' in request.FILES:
+        try:
             user.profile = request.FILES['profile']
+            user.save()
+            request.session['profile'] = user.profile.url 
+            
+        except:
+            user.save()
+            if user.usertype == "buyer":
+                return redirect("index")
+            else:
+                return redirect("sindex")
+    else:
         
-        user.save()
-        request.session['profile'] = user.profile.url  
-    
-    return render(request, 'profile.html', {'user': user})
+        if user.usertype == "buyer":
+            return render(request, 'profile.html', {'user': user})
+        else:
+            return render(request, 'Sellerprofile.html', {'user': user})
+         
 
 
 
@@ -64,7 +74,8 @@ def signup(request):
                     mobile = request.POST['mobile'],
                     password = request.POST['password'],
                     countryName = request.POST['countryName'],
-                    profile = request.FILES['profile']
+                    profile = request.FILES['profile'],
+                    usertype = request.POST['usertype']
                     
                 )
                 return render(request,'login.html')
@@ -82,7 +93,11 @@ def login(request):
             if user.password == request.POST['password']:
                 request.session['email']= user.email
                 request.session['profile'] = user.profile.url
-                return render(request,'index.html')
+                if user.usertype == "buyer":
+                    return render(request,'index.html')
+                else:
+                    return render(request,'SellerIndex.html')
+
             else:
                 msg = "Password doesn't match !!"
                 return render(request,'login.html',{'msg':msg})
@@ -100,9 +115,9 @@ def logout(request):
     return redirect("login")
 
 def cpass(request):
+    user = User.objects.get(email=request.session['email'])
     if request.method=="POST":
         try:
-            user = User.objects.get(email=request.session['email'])
             
             if user.password == request.POST['password']:
                 if request.POST['npassword'] == request.POST['cpassword']:
@@ -111,23 +126,32 @@ def cpass(request):
                     return redirect("logout")
                 else:
                     msg = "Password And Confirm Passsword Doesn't Match "
-                    return render(request,'cpass.html',{"msg":msg})
+                    if user.usertype =="buyer":
+                        return render(request,'cpass.html',{"msg":msg})
+                    else:
+                        return render(request,'SellerCPassword.html',{"msg":msg})
+
+                        
             else:
                 msg = "Old Password Doesn't Match "
-                return render(request,'cpass.html',{"msg":msg})
+                if user.usertype == "buyer":
+                   return render(request,'cpass.html',{"msg":msg})
+                else:
+                    return render(request,'SellerCPassword.html',{"msg":msg})
+          
         except:
-            return render(request,"cpass.html")
-                    
-    else:            
-        return render(request,"cpass.html")
-
-
-
-
-
-
-
+            if user.usertype == "buyer":
+                return render(request,"cpass.html")
+            else:
+                return render(request,"SellerCPassword.html")
     
+                    
+    else:    
+        if user.usertype == "buyer":        
+            return render(request,"cpass.html")
+        else:
+            return render(request,"SellerCPassword.html")
+
 
 
 def fpass(request):
@@ -171,3 +195,42 @@ def otp(request):
             return render(request,"otp.html",{"msg":msg})
     except:
         return render(request,'otp.html')
+    
+    
+    
+#___________________________________________________________
+#seller
+
+
+def sindex(request):
+    return render(request,"SellerIndex.html")
+
+
+
+
+def addproduct(request):
+    if request.method == "POST":
+        user = User.objects.get(email=request.session['email'])
+        try:
+            print("hello")
+            Product.objects.create(
+                user=user,
+                pcategory=request.POST['pcategory'],
+                productname=request.POST['productname'],
+                pprice=request.POST['pprice'],
+                pdesc=request.POST['pdesc'],
+                productimage=request.FILES['productimage'], # Assuming productimage is a file upload
+            )
+            return redirect("viewProduct")
+        except Exception as e:
+            print(e)
+            msg = "Error adding product. Please try again."
+            return render(request, "SellerIndex.html", {"msg": msg})
+    return render(request, "SellerAddProducts.html")
+
+    
+def viewproduct(request):
+    user = User.objects.get(email=request.session['email'])
+    product = Product.objects.filter(user=user)
+    return render(request, "ViewProduct.html", {"product": product})
+

@@ -33,6 +33,19 @@ urlpatterns = [
     path('fpass/', views.fpass, name='fpass'),
     path('otp/', views.otp, name='otp'),
     path('profile/', views.profilepage, name='profilepage'),
+    
+    
+    #=======================================================
+    #seller
+    
+    path('sindex/', views.sindex, name='sindex'),
+    path('addProduct/', views.addproduct, name='addproduct'),
+    path('viewproduct/', views.viewproduct, name='viewproduct'),
+
+
+
+    
+    
 
 
 ]
