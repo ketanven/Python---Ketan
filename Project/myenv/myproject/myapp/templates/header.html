@@ -12,7 +12,8 @@
 		<link href="{% static 'css/tiny-slider.css'%}" rel="stylesheet">
 		<title>Well Furni</title>
 		<link rel="shortcut icon" href="https://cdn.iconscout.com/icon/free/png-256/free-sofa-couch-belongings-furniture-furnishings-household-18-28257.png" type="image/x-icon">
-		
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 		<link rel="stylesheet" href="{% static 'css/style.css'%}">
 </head>
 <body>
@@ -37,19 +38,37 @@
 						<li><a class="nav-link" href="{% url "services" %}">Services</a></li>
 						<li><a class="nav-link" href="{% url "blog" %}">Blog</a></li>
                         {% if request.session.email %}
+						
 						<li><a class="nav-link" href="{% url "cpass" %}">Change-Password</a></li>
 						<li><a class="nav-link" href="{% url "logout" %}">Logout</a></li>
-						<li><button  onclick="location.href='{% url 'profilepage' %}'"  style="text-decoration: none;border: none;background: none;"><img src={{request.session.profile}} style="height:45px;border-radius: 50%;max-width: 45px;overflow: hidden;" ></button></li>
+						<li>
+							<a class="nav-link" href="{% url 'wishlist' %}">
+								<img style="" src="{% static 'images/favourite.png' %}">
+								{% if wish %}
+								<span style="
+									position: absolute;
+									    top: 4px;
+    									right: -4px;
+									padding: 5px 10px;
+									border-radius: 50%;
+									background: red;
+									color: white;" class="badge">
+									{{ count }}
+								</span>
+								{%endif%}
+							</a>
+						</li>
+						<li><a class="nav-link" href="{% url "cart" %}"><img src="{% static 'images/cart.svg'%}"></a></li>
+
+						<li><button  onclick="location.href='{% url 'profilepage' %}'"  style="text-decoration: none;border: none;background: none;overflow:hidden;"><img src={{request.session.profile}} style="padding:5px ;border-radius: 50%;width:45px;height:45px;overflow: hidden;border:2px solid white" ></button></li>
 						{% else %}
 						<li><a class="nav-link" href="{% url "signup" %}">Sign Up</a></li>
 						<li><a class="nav-link" href="{% url "login" %}">Log In</a></li>
 						{% endif %}
                     </ul>
 
-					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						
-						<li><a class="nav-link" href="{% url "cart" %}"><img src="{% static 'images/cart.svg'%}"></a></li>
-					</ul>
+
+					
 				</div>
 			</div>
 				
@@ -169,3 +188,5 @@
 		<script src="{% static "js/custom.js" %}"></script>
 </body>
 </html>
+
+

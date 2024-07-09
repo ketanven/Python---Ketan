@@ -33,6 +33,8 @@ urlpatterns = [
     path('fpass/', views.fpass, name='fpass'),
     path('otp/', views.otp, name='otp'),
     path('profile/', views.profilepage, name='profilepage'),
+    path('checkout/', views.checkout, name='checkout'),
+
     
     
     #=======================================================
@@ -41,6 +43,16 @@ urlpatterns = [
     path('sindex/', views.sindex, name='sindex'),
     path('addProduct/', views.addproduct, name='addproduct'),
     path('viewproduct/', views.viewproduct, name='viewproduct'),
+    path('spdetails/<int:pk>', views.spdetails, name='spdetails'),
+    path('pupdate/<int:pk>', views.pupdate, name='pupdate'),
+    path('delete/<int:pk>', views.delete, name='delete'),
+    path('bpdetails/<int:pk>', views.bpdetails, name='bpdetails'),
+    path('wishlist', views.wishlist, name='wishlist'),
+    path('addwishlist/<int:pk>', views.addwishlist, name='addwishlist'),
+
+
+
+
 
 
 

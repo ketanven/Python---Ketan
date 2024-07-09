@@ -11,7 +11,9 @@ def index(request):
     return render(request,'index.html')
 
 def shop(request):
-    return render(request,'shop.html')
+    user = User.objects.get(email=request.session['email'])
+    product = Product.objects.all()
+    return render(request,'shop.html',{"product":product})
 
 def about(request):
     return render(request,'about.html')
@@ -27,6 +29,11 @@ def contact(request):
 
 def cart(request):
     return render(request,'cart.html')
+
+def checkout(request):
+    return render(request,'checkout.html')
+
+    
 
 def profilepage(request):
     user = User.objects.get(email=request.session['email'])
@@ -212,14 +219,14 @@ def addproduct(request):
     if request.method == "POST":
         user = User.objects.get(email=request.session['email'])
         try:
-            print("hello")
+           
             Product.objects.create(
                 user=user,
                 pcategory=request.POST['pcategory'],
                 productname=request.POST['productname'],
                 pprice=request.POST['pprice'],
                 pdesc=request.POST['pdesc'],
-                productimage=request.FILES['productimage'], # Assuming productimage is a file upload
+                productimage=request.FILES['productimage'], 
             )
             return redirect("viewProduct")
         except Exception as e:
@@ -232,5 +239,91 @@ def addproduct(request):
 def viewproduct(request):
     user = User.objects.get(email=request.session['email'])
     product = Product.objects.filter(user=user)
-    return render(request, "ViewProduct.html", {"product": product})
+    return render(request, "ViewProduct.html", {"product":product})
+    
 
+def spdetails(request,pk):
+    user = User.objects.get(email=request.session['email'])
+    product = Product.objects.filter(pk=pk)
+    return render(request, "Spdetails.html", {"product":product})
+
+def pupdate(request, pk):
+    user = User.objects.get(email=request.session['email'])
+    product = Product.objects.get(pk=pk)
+    
+    if request.method == "POST":
+        product.pcategory = request.POST['pcategory']
+        product.productname = request.POST['productname']
+        product.pprice = request.POST['pprice']
+        product.pdesc = request.POST['pdesc']
+        
+        try:
+            if 'productimage' in request.FILES:
+                product.productimage = request.FILES['productimage']
+            product.save()
+        except Exception as e:
+            print(e)
+            msg = "Error updating product. Please try again."
+            return render(request, "ProductUpdate.html", {"product": product, "msg": msg})
+
+        return redirect("viewproduct")
+    else:
+        return render(request, "ProductUpdate.html", {"product": product})
+
+        
+            
+def delete(request, pk):
+    user = User.objects.get(email=request.session['email'])
+    try:
+        product = Product.objects.get(pk=pk, user=user)
+        product.delete()
+        msg = "Product deleted successfully."
+        return redirect("viewproduct")
+    except Product.DoesNotExist:
+        msg = "Product not found."
+        return render(request, "Spdetails.html", {"msg": msg})
+    except Exception as e:
+        print(e)
+        msg = "Error deleting product. Please try again."
+        return render(request, "Spdetails.html", {"msg": msg})
+    
+    
+    
+def bpdetails(request,pk):
+    user = User.objects.get(email=request.session['email'])
+    product = Product.objects.get(pk=pk)
+    w = False
+    try:
+        wish = Wishlist.objects.get(user=user,product=product)
+        w = True
+    except:
+        pass
+    return render(request, "bpdetails.html", {"product":product,"w":w})
+
+
+
+def addwishlist(request,pk):
+    user = User.objects.get(email=request.session['email'])
+    product = Product.objects.get(pk=pk)
+    Wishlist.objects.create(
+        user = user,
+        product = product
+    )
+    return redirect("wishlist")
+
+def wishlist(request):
+    user = User.objects.get(email=request.session['email'])
+    wish = Wishlist.objects.filter(
+        user = user,
+    )
+    count = wish.count()
+    return render(request, "wishlist.html", {'wish':wish,"count":count})
+
+    
+    
+      
+       
+        
+     
+    
+        
