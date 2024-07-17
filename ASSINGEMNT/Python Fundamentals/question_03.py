@@ -15,3 +15,19 @@ while a <= num:
     if a > num:
         break
 print()  # Move to the next line after printing the series
+
+
+
+n  = int(input("** Enter the maximum value for Fibonacci series: "))
+n1 = 0
+n2 = 0
+
+print(n1)
+print(n2)
+
+for i in range(3,n+1):
+    n3 = n1+n2
+    print(n3)
+    n1=n2
+    n2=n3
+    print()  # Move to the next line after printing the series

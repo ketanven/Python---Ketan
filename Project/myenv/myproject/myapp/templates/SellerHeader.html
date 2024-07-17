@@ -32,16 +32,16 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'sindex'%}">Home</a>
 						</li>
+                        {% if request.session.email %}
 						<li><a class="nav-link" href="{% url 'addproduct' %}">Add Product</a></li>
 						<li><a class="nav-link" href="{% url 'viewproduct' %}">View Product</a></li>
 						
-                        {% if request.session.email %}
 						<li><a class="nav-link" href="{% url "cpass" %}">Change-Password</a></li>
 						<li><a class="nav-link" href="{% url "logout" %}">Logout</a></li>
 						<li><button  onclick="location.href='{% url 'profilepage' %}'"  style="text-decoration: none;border: none;background: none;"><img src={{request.session.profile}} style="height:45px;border-radius: 50%;max-width: 45px;overflow: hidden;" ></button></li>
 						{% else %}
 						<li><a class="nav-link" href="{% url "signup" %}">Sign Up</a></li>
-						<li><a class="nav-link" href="{% url "login" %}">Log In</a></li>
+						<li><a class="nav-link" href="{% url "Sellerlogin" %}">Log In</a></li>
 						{% endif %}
                     </ul>
 

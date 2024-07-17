@@ -40,6 +40,9 @@ urlpatterns = [
     #=======================================================
     #seller
     
+    path('Sellerlogin', views.Sellerlogin, name='Sellerlogin'),
+    # path('Sellerprofilepage/', views.Sellerprofilepage, name='Sellerprofilepage'),
+
     path('sindex/', views.sindex, name='sindex'),
     path('addProduct/', views.addproduct, name='addproduct'),
     path('viewproduct/', views.viewproduct, name='viewproduct'),
@@ -49,6 +52,15 @@ urlpatterns = [
     path('bpdetails/<int:pk>', views.bpdetails, name='bpdetails'),
     path('wishlist', views.wishlist, name='wishlist'),
     path('addwishlist/<int:pk>', views.addwishlist, name='addwishlist'),
+    path('deletewishlist/<int:pk>', views.deletewishlist, name='deletewishlist'),
+
+    path('cart', views.cart, name='cart'),
+    path('addcart/<int:pk>', views.addcart, name='addcart'),
+    path('deletecart/<int:pk>', views.deletecart, name='deletecart'),
+    path('changeqty/<int:pk>', views.changeqty, name='changeqty'),
+    path('thankyou', views.thankyou, name='thankyou'),
+    path('myorder', views.myorder, name='myorder'),
+
 
 
 

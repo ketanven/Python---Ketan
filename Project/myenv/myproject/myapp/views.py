@@ -1,17 +1,25 @@
 from django.shortcuts import render,redirect
 from .models import *
 import random
-import requests
+# import requests
 from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+from django.http import JsonResponse,HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+import razorpay
+import pkg_resources
+from django.views.decorators.http import require_POST
 
 
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    product = Product.objects.all()
+    return render(request,'index.html',{"product":product})
+
 
 def shop(request):
-    user = User.objects.get(email=request.session['email'])
     product = Product.objects.all()
     return render(request,'shop.html',{"product":product})
 
@@ -27,8 +35,7 @@ def blog(request):
 def contact(request):
     return render(request,'contact.html')
 
-def cart(request):
-    return render(request,'cart.html')
+
 
 def checkout(request):
     return render(request,'checkout.html')
@@ -61,10 +68,7 @@ def profilepage(request):
             return render(request, 'profile.html', {'user': user})
         else:
             return render(request, 'Sellerprofile.html', {'user': user})
-         
-
-
-
+    
 
 
 def signup(request):
@@ -212,6 +216,11 @@ def otp(request):
 def sindex(request):
     return render(request,"SellerIndex.html")
 
+def Sellerlogin(request):
+    return render(request,"Sellerlogin.html")
+
+    
+
 
 
 
@@ -290,15 +299,32 @@ def delete(request, pk):
     
     
 def bpdetails(request,pk):
-    user = User.objects.get(email=request.session['email'])
-    product = Product.objects.get(pk=pk)
-    w = False
-    try:
-        wish = Wishlist.objects.get(user=user,product=product)
-        w = True
-    except:
-        pass
-    return render(request, "bpdetails.html", {"product":product,"w":w})
+    if request.session.get('email'):
+        user = User.objects.get(email=request.session['email'])
+        product = Product.objects.get(pk=pk)
+        w = False
+        w1 = False
+        try:
+            wish = Wishlist.objects.get(user=user,product=product)
+            w = True
+        except:
+            pass
+        
+        try:
+            cart = Cart.objects.get(
+            user = user,
+            product = product,
+            payment = True  
+        )
+            w1 = True
+        except:
+            pass
+        
+        return render(request, "bpdetails.html", {"product":product,"w":w,"w1":w1})
+    else:
+        return redirect('login')
+
+    
 
 
 
@@ -319,11 +345,118 @@ def wishlist(request):
     count = wish.count()
     return render(request, "wishlist.html", {'wish':wish,"count":count})
 
+
+def deletewishlist(request,pk):
+    user = User.objects.get(email=request.session['email'])
+    product = Product.objects.get(pk=pk)
+    wish = Wishlist.objects.filter(
+        user = user,
+        product = product
+        
+    )
+    wish.delete()
+    return redirect('wishlist')
+
+
+
+def cart(request):
+    try:
+        user = User.objects.get(email=request.session['email'])
+        cart = Cart.objects.filter(
+        user = user,
+        payment = False,
+         )
+        net = 0
+        subtotal = 100
+
+        for i in cart:
+            net += i.roundtotal
+
+        for i in cart:
+            subtotal += i.roundtotal
+
+        print("Net:", net)
+        print("Subtotal:", subtotal)
+        
+        
+        client = razorpay.Client(auth = (settings.RAZORPAY_KEY_ID,settings.RAZORPAY_KEY_SECRET))
+        payment = client.order.create({'amount': net * 100, 'currency': 'INR', 'payment_capture': 1})
+        
+        context = {
+                        'payment': payment,
+                        # 'book':book,  # Ensure the amount is in paise
+                    }
+
+            
+        return render(request,'cart.html',{"cart":cart,"net":net,"subtotal":subtotal,"context":context})
+
+    except:
+        return render(request,'cart.html')
+
     
-    
+def addcart(request,pk):
+    user = User.objects.get(email=request.session['email'])
+    product = Product.objects.get(pk=pk)
+    Cart.objects.create(
+        user = user,
+        product = product,
+        payment = False,
+        qty = 1,
+        total = product.pprice,
+        roundtotal = product.pprice,
+    )
+    return redirect("cart")
+
+def deletecart(request,pk):
+    user = User.objects.get(email=request.session['email'])
+    product = Product.objects.get(pk=pk)
+    cart = Cart.objects.filter(
+        user = user,
+        product = product
+        
+    )
+    cart.delete()
+    return redirect('cart')
       
        
+@require_POST
+
+def changeqty(request,pk):
+
+    
+    c = Cart.objects.get(pk=pk)    
+    c.qty = int(request.POST['qty'])
+    c.save()
+    c.roundtotal = c.total*c.qty
+    c.save()
+    print(c.roundtotal)
+    return JsonResponse({'roundtotal': c.roundtotal})
+
+
+def thankyou(request):
+    try:
+        user = User.objects.get(email=request.session['email'])
+        cart = Cart.objects.filter(user=user)
+
         
-     
+        for i in cart:
+            print("_______________")
+            i.payment = True
+            i.save()
+        return render(request,'thankyou.html',{"cart":cart})
+
+    except Exception as e:
+        print(e)
+        return render(request,'cart.html')
+
+    
+def myorder(request):
+    user = User.objects.get(email=request.session['email'])
+    cart = Cart.objects.filter(user=user,payment=True)
+    return render(request,'myorder.html',{"cart":cart}) 
+
+    
+
+    
     
         

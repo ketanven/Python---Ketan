@@ -1,0 +1,28 @@
+<!-- manage_institute/templates/student_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+<h2>Students</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.first_name }}</td>
+            <td>{{ student.last_name }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.date_of_birth }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

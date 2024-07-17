@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -118,6 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+SESSION_EXPIRE_SECONDS = 3600   # 1 hour
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = 'your_redirect_url_here/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -127,3 +132,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Directory where uploaded media is saved.
 MEDIA_URL = '/media/' # Public URL at the browser
+
+
+RAZORPAY_KEY_ID = 'rzp_test_qR4RRcX7iYEtFH'
+RAZORPAY_KEY_SECRET = 'lWVI4f7rnhwRhYSunmR3JDl6'
+
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+

@@ -29,14 +29,23 @@
                                 
                                 {% if w == True %}
                                 
-                                <a href="{% url 'pupdate' pk=product.pk %}" type="button" class="btn btn-danger bg-danger mx-4 mt-4">Delete from Wishlist</a>
+                                <a href="{% url 'deletewishlist' pk=product.pk %}" type="button" class="btn btn-danger bg-danger mx-4 mt-4">Delete from Wishlist</a>
                                 
                                 {% else%}
                                 
                                 <a href="{% url 'addwishlist' pk=product.pk %}" type="button" class="btn btn-danger bg-success mx-4 mt-4">Add to Wishlist</a>
 
                                 {% endif %}
-                                <a href="{% url 'delete' pk=product.pk %}" type="button" class="btn btn-danger bg-success mx-4 mt-4">Add to Cart</a>
+
+
+                                {% if w1 == True %}
+
+                                <a href="{% url 'deletecart' pk=product.pk %}" type="button" class="btn btn-danger bg-danger mx-4 mt-4">Delete from Cart</a>
+
+                                {% else %}
+                                <a href="{% url 'addcart' pk=product.pk %}" type="button" class="btn btn-danger bg-success mx-4 mt-4">Add to Cart</a>
+                                 
+                                {% endif %}
                             </div>
 
                             <div class="modal-footer">

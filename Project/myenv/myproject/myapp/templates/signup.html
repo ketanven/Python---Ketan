@@ -86,84 +86,76 @@
                 </div>
               </div>
 
-              <form method="post" action="{% url 'signup' %}" enctype="multipart/form-data">
-             {% csrf_token %}
+              <form method="post" action="{% url 'signup' %}" id="signupForm" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="row">
                   <div class="col-12">
                     <div class="dropdown mb-2">
                       <label class="h4" for="">
                         Select Role
-                        <select name="usertype" style="appearance: none;" class="btn btn-secondary mt-3 p-3 w-100 " type="button">
-                          
+                        <select name="usertype" style="appearance: none;" class="btn btn-secondary mt-3 p-3 w-100" type="button" required>
                           <option class="btn btn-secondary text-center" value="buyer">Buyer</option>
-                          <option class="btn btn-secondary text-center" value="seller" >Seller</option>
-                          
-                          
+                          <option class="btn btn-secondary text-center" value="seller">Seller</option>
                         </select>
                       </label>
                     </div>
                     <div class="table">
                       <tr>
-                          <td>
-                              Upload Your Profile Pic   
-                          </td>
-                          <td>
-                              <input name="profile" class="m-2" type="file">
-                          </td>
+                        <td>
+                          Upload Your Profile Pic
+                        </td>
+                        <td>
+                          <input name="profile" class="m-2" type="file" required>
+                        </td>
                       </tr>
-                  
-                       </div>
+                    </div>
                   </div>
                   <div class="col-6">
-                    
                     <div class="form-group">
                       <label class="text-black" for="name">Full name</label>
-                      <input type="text" name="name" class="form-control" id="fname">
+                      <input type="text" name="name" class="form-control" id="name" >
+                      <small class="text-danger" id="nameError"></small>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                       <label class="text-black" for="email">Email address</label>
-                      <input type="email" name="email" class="form-control" id="email">
+                      <input type="email" name="email" class="form-control" id="email" >
+                      <small class="text-danger" id="emailError"></small>
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                          <label class="text-black" for="password">Password</label>
-                          <input type="Password" name="password" class="form-control" id="Password">
-                        </div>
-
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black" for="password">Password</label>
+                      <input type="password" name="password" class="form-control" id="password" >
+                      <small class="text-danger" id="passwordError"></small>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label class="text-black" for="cpassword">Comfirm Password</label>
-                            <input type="Password" name="cpassword" class="form-control" id="CPassword">
-                          </div>
-                        
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black" for="cpassword">Confirm Password</label>
+                      <input type="password" name="cpassword" class="form-control" id="cpassword" >
+                      <small class="text-danger" id="cpasswordError"></small>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label class="text-black" for="mobile">Mobile No</label>
-                            <input type="tel" name="mobile" class="form-control" id="mobile">
-                          </div>
-                        
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black" for="mobile">Mobile No</label>
+                      <input type="tel" name="mobile" class="form-control" id="mobile" >
+                      <small class="text-danger" id="mobileError"></small>
                     </div>
-                 <div class="col-6">
-                        <div class="form-group">
-                            <label class="text-black" for="Country">Country</label>
-                            <input type="text" name="countryName" class="form-control" id="Country">
-                          </div>
-                        
-                    </div> 
-                    
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black" for="country">Country</label>
+                      <input type="text" name="countryName" class="form-control" id="country" >
+                      <small class="text-danger" id="countryError"></small>
+                    </div>
+                  </div>
                 </div>
-                
-               
-                
-
-                <button type="submit" class="btn btn-primary-hover-outline mt-3">Sign Up </button>
+                <button type="submit" class="btn btn-primary-hover-outline mt-3">Sign Up</button>
               </form>
 
             </div>
@@ -183,5 +175,67 @@
 		
 
 	</body>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+      var formIsValid = true;
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var cpassword = document.getElementById('cpassword').value;
+      var mobile = document.getElementById('mobile').value;
+      var country = document.getElementById('country').value;
+    
+      var nameError = document.getElementById('nameError');
+      var emailError = document.getElementById('emailError');
+      var passwordError = document.getElementById('passwordError');
+      var cpasswordError = document.getElementById('cpasswordError');
+      var mobileError = document.getElementById('mobileError');
+      var countryError = document.getElementById('countryError');
+    
+      nameError.textContent = '';
+      emailError.textContent = '';
+      passwordError.textContent = '';
+      cpasswordError.textContent = '';
+      mobileError.textContent = '';
+      countryError.textContent = '';
+    
+      if (name.trim() === '') {
+        nameError.textContent = 'Full name is required.';
+        formIsValid = false;
+      }
+    
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        emailError.textContent = 'Invalid email address.';
+        formIsValid = false;
+      }
+    
+      var passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$/;
+      if (!passwordPattern.test(password)) {
+        passwordError.textContent = 'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a digit, and a special character.';
+        formIsValid = false;
+      }
+    
+      if (password !== cpassword) {
+        cpasswordError.textContent = 'Passwords do not match.';
+        formIsValid = false;
+      }
+    
+      var mobilePattern = /^\d{10}$/;
+      if (!mobilePattern.test(mobile)) {
+        mobileError.textContent = 'Mobile number must be 10 digits.';
+        formIsValid = false;
+      }
+    
+      if (country.trim() === '') {
+        countryError.textContent = 'Country is required.';
+        formIsValid = false;
+      }
+    
+      if (!formIsValid) {
+        event.preventDefault();
+      }
+    });
+  </script>
 {% endblock %}
 </html>
