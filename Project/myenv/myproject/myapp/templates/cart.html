@@ -4,6 +4,12 @@
 {% block content %}
 <!doctype html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+</head>
+<body>
 {% if cart %}
     <!-- Start Hero Section -->
     <div class="hero">
@@ -36,25 +42,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for i in cart %}
-                            <tr>
+                            {% for item in cart %}
+                            <tr id="cart-item-{{ item.pk }}">
                                 <td class="product-thumbnail">
-                                    <img style="height: 150px; width: 200px; border-radius: 10%; border: 2px green solid; box-shadow: 0px 0px 1px 2px green;" src="{{i.product.productimage.url}}" alt="Image" class="img-fluid">
+                                    <img style="height: 150px; width: 200px; border-radius: 10%; border: 2px green solid; box-shadow: 0px 0px 1px 2px green;" src="{{ item.product.productimage.url }}" alt="Image" class="img-fluid">
                                 </td>
                                 <td class="product-name">
-                                    <h2 class="h5 text-black">{{ i.product.productname }}</h2>
+                                    <h2 class="h5 text-black">{{ item.product.productname }}</h2>
                                 </td>
-                                <td>${{ i.product.pprice }}</td>
+                                <td>${{ item.product.pprice }}</td>
                                 <td>
-                                    <form id="quantity-form-{{ i.pk }}" method="post" action="{% url 'changeqty' pk=i.pk %}">
-                                        {% csrf_token %}
-                                        <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
-                                            <input type="number" class="form-control text-center quantity-amount" value="{{ i.qty }}" name="qty" oninput="submitForm('{{ i.pk }}')">
-                                        </div>
-                                    </form>
+                                    <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
+                                        <input type="number" class="form-control text-center quantity-amount" value="{{ item.qty }}" min="1" name="qty" data-item-pk="{{ item.pk }}" onchange="updateQuantity(this)">
+                                    </div>
                                 </td>
-                                <td id="roundtotal-{{ i.pk }}">{{ i.roundtotal }}</td>
-                                <td><a href="{% url 'deletecart' pk=i.product.pk %}" class="btn btn-black btn-sm">X</a></td>
+                                <td class="product-total" id="roundtotal-{{ item.pk }}">{{ item.roundtotal }}</td>
+                                <td><a href="{% url 'deletecart' pk=item.product.pk %}" class="btn btn-black btn-sm">X</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -66,7 +69,7 @@
                 <div class="col-md-6">
                     <div class="row mb-5">
                         <div class="col-md-6 mb-3 mb-md-0">
-                            <button class="btn btn-black btn-sm btn-block">Update Cart</button>
+                            <button class="btn btn-black btn-sm btn-block" onclick="updateCart()">Update Cart</button>
                         </div>
                         <div class="col-md-6">
                             <a href="{% url 'shop' %}" class="btn btn-outline-black btn-sm btn-block">Continue Shopping</a>
@@ -98,7 +101,7 @@
                                     <span class="text-black">Subtotal</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">${{ net }}</strong>
+                                    <strong class="text-black" id="net-total">${{ net }}</strong>
                                 </div>
                             </div>
                             <div class="row mb-5">
@@ -106,7 +109,7 @@
                                     <span class="text-black">Total(Tax)</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">${{ subtotal }}</strong>
+                                    <strong class="text-black" id="subtotal">${{ subtotal }}</strong>
                                 </div>
                             </div>
 
@@ -132,17 +135,22 @@
 {% endif %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function submitForm(pk) {
-        var form = $('#quantity-form-' + pk);
-        var formData = form.serialize();
+    function updateQuantity(input) {
+        var qty = $(input).val();
+        var itemPk = $(input).data('item-pk');
 
         $.ajax({
             type: 'POST',
-            url: form.attr('action'),
-            data: formData,
+            url: '{% url "changeqty" pk=0 %}'.replace('0', itemPk),
+            data: {
+                'qty': qty,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
             success: function(response) {
                 if (response.roundtotal) {
-                    $('#roundtotal-' + pk).text(response.roundtotal);
+                    $('#roundtotal-' + itemPk).text(response.roundtotal);
+                    $('#net-total').text('$' + response.net_total.toFixed(2));
+                    $('#subtotal').text('$' + response.subtotal.toFixed(2));
                 } else if (response.error) {
                     alert('Error: ' + response.error);
                 }
@@ -154,33 +162,24 @@
         });
     }
 
+    function updateCart() {
+        // Placeholder function for updating the cart in the backend
+        alert('Update cart function to be implemented.');
+    }
+
     var options = {
         "key": "rzp_test_3iCOPLbchUyIwQ", // Enter the Key ID generated from the Dashboard
-        "amount": "{{context.payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "amount": "{{ context.payment.amount }}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         "currency": "INR",
         "name": "Furni",
-        "description": "Test Payment", // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "handler": function (response){
-            window.location.href = `http://127.0.0.1:8000/thankyou?razorpay_payment_id=${response.razorpay_payment_id}`;
-        },
-        "theme": {
-            "color": "#94CA21"
-        }
+        "description": "Test Payment", // This is a sample Order ID. Pass the `id` obtained in the response of
     };
     var rzp1 = new Razorpay(options);
-    rzp1.on('payment.failed', function (response) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
-    });
     document.getElementById('rzp-button1').onclick = function(e) {
         rzp1.open();
         e.preventDefault();
     }
 </script>
-{% endblock %}
+</body>
 </html>
+{% endblock %}

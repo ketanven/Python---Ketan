@@ -1,17 +1,11 @@
 from django.shortcuts import render,redirect
 from .models import *
 import random
-# import requests
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.http import JsonResponse,HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
 import razorpay
 import pkg_resources
-from django.views.decorators.http import require_POST
-
-
 # Create your views here.
 
 def index(request):
@@ -68,6 +62,7 @@ def profilepage(request):
             return render(request, 'profile.html', {'user': user})
         else:
             return render(request, 'Sellerprofile.html', {'user': user})
+    
     
 
 
@@ -419,10 +414,8 @@ def deletecart(request,pk):
     return redirect('cart')
       
        
-@require_POST
-
+        
 def changeqty(request,pk):
-
     
     c = Cart.objects.get(pk=pk)    
     c.qty = int(request.POST['qty'])

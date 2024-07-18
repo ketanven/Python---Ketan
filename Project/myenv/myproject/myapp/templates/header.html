@@ -13,9 +13,11 @@
 		<title>Well Furni</title>
 		<link rel="shortcut icon" href="https://cdn.iconscout.com/icon/free/png-256/free-sofa-couch-belongings-furniture-furnishings-household-18-28257.png" type="image/x-icon">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 		<link rel="stylesheet" href="{% static 'css/style.css'%}">
-</head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	</head>
 <body>
 
     <!-- Start Header/Navigation -->
@@ -194,6 +196,9 @@
         <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
 		<script src="{% static "js/tiny-slider.js" %}"></script>
 		<script src="{% static "js/custom.js" %}"></script>
+		<script>
+			AOS.init();
+		  </script>
 </body>
 </html>
 
