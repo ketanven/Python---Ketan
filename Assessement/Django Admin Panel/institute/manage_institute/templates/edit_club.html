@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Club{% endblock %}
+
+{% block content %}
+<h2 class="pt-3 mb-3 text-center">Edit Club</h2>
+<form style="border: 2px solid green; box-shadow: 0px 0px 0px 5px green;" class="p-2"  method="post" id="editClubForm">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="name">Name</label>
+                <input type="text" name="name" class="form-control" id="name" value="{{ club.name }}" placeholder="Enter club name">
+                <small class="text-danger" id="nameError"></small>
+            </div>
+        </div>
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="description">Description</label>
+                <textarea name="description" class="form-control" id="description" placeholder="Enter club description">{{ club.description }}</textarea>
+                <small class="text-danger" id="descriptionError"></small>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="founded_date">Founded Date</label>
+                <input type="date" name="founded_date" class="form-control" id="founded_date" value="{{ club.founded_date }}">
+                <small class="text-danger" id="foundedDateError"></small>
+            </div>
+        </div>
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="president">President</label>
+                <input type="text" name="president" class="form-control" id="president" value="{{ club.president }}" placeholder="Enter president's name">
+                <small class="text-danger" id="presidentError"></small>
+            </div>
+        </div>
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="members_count">Members Count</label>
+                <input type="number" name="members_count" class="form-control" id="members_count" value="{{ club.members_count }}" placeholder="Enter number of members">
+                <small class="text-danger" id="membersCountError"></small>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success w-25 mt-3">Save</button>
+</form>
+
+<script>
+    document.getElementById('editClubForm').addEventListener('submit', function(event) {
+        let valid = true;
+        const name = document.getElementById('name').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const foundedDate = document.getElementById('founded_date').value;
+        const president = document.getElementById('president').value.trim();
+        const membersCount = document.getElementById('members_count').value.trim();
+
+        // Clear previous error messages
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('descriptionError').textContent = '';
+        document.getElementById('foundedDateError').textContent = '';
+        document.getElementById('presidentError').textContent = '';
+        document.getElementById('membersCountError').textContent = '';
+
+        if (name === '') {
+            document.getElementById('nameError').textContent = 'Club name is required.';
+            valid = false;
+        }
+
+        if (description === '') {
+            document.getElementById('descriptionError').textContent = 'Description is required.';
+            valid = false;
+        }
+
+        if (foundedDate === '') {
+            document.getElementById('foundedDateError').textContent = 'Founded date is required.';
+            valid = false;
+        }
+
+        if (president === '') {
+            document.getElementById('presidentError').textContent = 'President name is required.';
+            valid = false;
+        }
+
+        if (membersCount === '' || isNaN(membersCount) || membersCount < 0) {
+            document.getElementById('membersCountError').textContent = 'Valid members count is required.';
+            valid = false;
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+</script>
+
+{% endblock %}

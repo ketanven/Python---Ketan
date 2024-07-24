@@ -1,0 +1,36 @@
+<!-- manage_institute/templates/teacher_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Teachers{% endblock %}
+
+{% block content %}
+<h2 class="pt-3 mb-3 text-center">Teachers</h2>
+<a href="{% url 'create_teacher' %}" class="btn btn-success w-25 mb-3">Create</a>
+<table style="border: 2px solid pink; box-shadow: 0px 0px 0px 5px pink;" class="table">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Date of Birth</th>
+            <th>Date of Joining</th>
+            <th>Address</th>
+            <th>Compensation</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for teacher in teachers %}
+        <tr>
+            <td>{{ teacher.full_name }}</td>
+            <td>{{ teacher.date_of_birth }}</td>
+            <td>{{ teacher.date_of_joining }}</td>
+            <td>{{ teacher.address }}</td>
+            <td>{{ teacher.compensation }}</td>
+            <td>
+                <a href="{% url 'edit_teacher' teacher.id %}" class="btn btn-info">Edit</a>
+                <a href="{% url 'delete_teacher' teacher.id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

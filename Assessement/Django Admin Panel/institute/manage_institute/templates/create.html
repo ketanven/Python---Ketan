@@ -1,0 +1,103 @@
+<!-- manage_institute/templates/create.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Create Student{% endblock %}
+
+{% block content %}
+<h2 class="pt-3 mb-3 text-center">Create Student</h2>
+{% if msg %}
+<div class="alert alert-danger">{{ msg }}</div>
+{% endif %}
+<form  style="border: 2px solid pink; box-shadow: 0px 0px 0px 5px pink;" class="p-2" method="post" id="signupForm" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div  class="row">
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="full_name">Full Name</label>
+                <input type="text" name="full_name" class="form-control" id="full_name" placeholder="Enter full name" >
+                <small class="text-danger" id="nameError"></small>
+            </div>
+        </div>
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="date_of_birth">Date of Birth</label>
+                <input type="date" name="date_of_birth" class="form-control" id="date_of_birth" >
+                <small class="text-danger" id="dobError"></small>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="date_of_joining">Date of Joining</label>
+                <input type="datetime-local" name="date_of_joining" class="form-control" id="date_of_joining" >
+                <small class="text-danger" id="dojError"></small>
+            </div>
+        </div>
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="address">Address</label>
+                <textarea name="address" class="form-control" id="address" placeholder="Enter address" ></textarea>
+                <small class="text-danger" id="addressError"></small>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center mb-3">
+
+            <button type="submit" class="btn btn-success w-25 mt-3">Create</button>
+        </div>
+    </div>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('signupForm');
+    
+    form.addEventListener('submit', function (event) {
+        let isValid = true;
+
+        // Get form fields
+        const fullName = document.getElementById('full_name');
+        const dateOfBirth = document.getElementById('date_of_birth');
+        const dateOfJoining = document.getElementById('date_of_joining');
+        const address = document.getElementById('address');
+
+        // Clear previous errors
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('dobError').textContent = '';
+        document.getElementById('dojError').textContent = '';
+        document.getElementById('addressError').textContent = '';
+
+        // Validate Full Name
+        if (fullName.value.trim() === '') {
+            document.getElementById('nameError').textContent = 'Full name is required.';
+            isValid = false;
+        }
+
+        // Validate Date of Birth
+        if (dateOfBirth.value.trim() === '') {
+            document.getElementById('dobError').textContent = 'Date of Birth is required.';
+            isValid = false;
+        }
+
+        // Validate Date of Joining
+        if (dateOfJoining.value.trim() === '') {
+            document.getElementById('dojError').textContent = 'Date of Joining is required.';
+            isValid = false;
+        }
+
+        // Validate Address
+        if (address.value.trim() === '') {
+            document.getElementById('addressError').textContent = 'Address is required.';
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+});
+</script>
+{% endblock %}

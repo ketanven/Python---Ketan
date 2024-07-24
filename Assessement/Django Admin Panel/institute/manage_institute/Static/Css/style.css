@@ -1,0 +1,40 @@
+.sidebar {
+  background-color: #ec1055;
+  min-height: 100vh;
+  color: white;
+}
+.sidebar a {
+  color: white;
+  font-size: 16px;
+}
+.sidebar .nav-link {
+  border-bottom: 1px solid #c7155f;
+}
+.main-content {
+  background-color: #f3f3f3;
+}
+.header {
+  background-color: #d81957;
+  color: white;
+}
+.dashboard-header {
+  background-color: #a0e8d2;
+  color: #d81957;
+  padding: 15px;
+}
+.card-custom {
+  background-color: #d81957;
+  color: white;
+  padding: 20px;
+}
+.dashboard-glance {
+  color: #d81957;
+  background-color: #f3f3f3;
+  padding: 10px;
+}
+.footer {
+  background-color: #d81957;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}

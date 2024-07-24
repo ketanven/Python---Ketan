@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile Page{% endblock %}
+
+{% block content %}
+<h2 class="pt-3 mb-3 text-center">Update Your Profile</h2>
+<form style="border: 2px solid green; box-shadow: 0px 0px 0px 5px green;" class="p-2" method="post" action="{% url 'profilepage' %}" id="profileForm" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12 p-3">
+            <div class="form-group">
+                <label for="profile">Upload Your Profile Pic</label>
+                <input name="profile" class="form-control" type="file" id="profile" accept="image/*">
+                <small class="text-danger" id="profileError"></small>
+            </div>
+        </div>
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="name">Full Name</label>
+                <input type="text" name="name" class="form-control" id="name" value="{{ user.name }}" required>
+                <small class="text-danger" id="nameError"></small>
+            </div>
+        </div>
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="email">Email Address</label>
+                <input type="email" name="email" class="form-control" id="email" value="{{ user.email }}" required>
+                <small class="text-danger" id="emailError"></small>
+            </div>
+        </div>
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="mobile">Mobile No</label>
+                <input type="tel" name="mobile" class="form-control" id="mobile" value="{{ user.mobile }}" pattern="[0-9]{10}" title="Enter a 10-digit mobile number" required>
+                <small class="text-danger" id="mobileError"></small>
+            </div>
+        </div>
+        <div class="col-6 p-3">
+            <div class="form-group">
+                <label class="text-black" for="institute">Institute Name</label>
+                <input type="text" name="institute" class="form-control" id="institute" value="{{ user.institute }}" required>
+                <small class="text-danger" id="instituteError"></small>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary w-25 mt-3">Update Profile</button>
+</form>
+
+{% if error %}
+<h1 class="mt-3 text-danger">{{ error }}</h1>
+{% endif %}
+
+<script>
+document.getElementById('profileForm').addEventListener('submit', function(event) {
+    var isValid = true;
+    
+    // Validate Full Name
+    var name = document.getElementById('name');
+    if (name.value.trim() === '') {
+        document.getElementById('nameError').textContent = 'Full Name is required.';
+        isValid = false;
+    } else {
+        document.getElementById('nameError').textContent = '';
+    }
+    
+    // Validate Email
+    var email = document.getElementById('email');
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email.value.trim())) {
+        document.getElementById('emailError').textContent = 'Invalid Email Address.';
+        isValid = false;
+    } else {
+        document.getElementById('emailError').textContent = '';
+    }
+    
+    // Validate Mobile
+    var mobile = document.getElementById('mobile');
+    var mobilePattern = /^[0-9]{10}$/;
+    if (!mobilePattern.test(mobile.value.trim())) {
+        document.getElementById('mobileError').textContent = 'Mobile number must be 10 digits.';
+        isValid = false;
+    } else {
+        document.getElementById('mobileError').textContent = '';
+    }
+    
+    // Validate Profile Pic
+    var profile = document.getElementById('profile');
+    if (profile.files.length > 0 && !profile.files[0].type.startsWith('image/')) {
+        document.getElementById('profileError').textContent = 'Only image files are allowed.';
+        isValid = false;
+    } else {
+        document.getElementById('profileError').textContent = '';
+    }
+    
+    if (!isValid) {
+        event.preventDefault(); // Prevent form submission if validation fails
+    }
+});
+</script>
+
+{% endblock %}

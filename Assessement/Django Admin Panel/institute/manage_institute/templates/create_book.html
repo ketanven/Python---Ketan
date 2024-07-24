@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Book{% endblock %}
+
+{% block content %}
+<h2>Create Book</h2>
+<form class="p-3" style="border: 2px solid pink; box-shadow: 0px 0px 0px 5px green;" method="post" id="createBookForm">
+    {% csrf_token %}
+    <div class="form-group p-2">
+        <label for="title">Title</label>
+        <input type="text" name="title" class="form-control" id="title" placeholder="Enter book title">
+        <small class="text-danger" id="titleError"></small>
+    </div>
+    <div class="form-group p-2">
+        <label for="author">Author</label>
+        <input type="text" name="author" class="form-control" id="author" placeholder="Enter author name">
+        <small class="text-danger" id="authorError"></small>
+    </div>
+    <div class="form-group p-2">
+        <label for="published_date">Published Date</label>
+        <input type="date" name="published_date" class="form-control" id="published_date">
+        <small class="text-danger" id="publishedDateError"></small>
+    </div>
+    <div class="form-group p-2">
+        <label for="isbn">ISBN</label>
+        <input type="text" name="isbn" class="form-control" id="isbn" placeholder="Enter ISBN">
+        <small class="text-danger" id="isbnError"></small>
+    </div>
+    <div class="form-group p-2">
+        <label for="pages">Pages</label>
+        <input type="number" name="pages" class="form-control" id="pages" placeholder="Enter number of pages">
+        <small class="text-danger" id="pagesError"></small>
+    </div>
+    <div class="form-group p-2">
+        <label for="language">Language</label>
+        <select name="language" class="form-control" id="language">
+            <option value="">Select Language</option>
+            <option value="English">English</option>
+            <option value="Spanish">Spanish</option>
+            <option value="French">French</option>
+        </select>
+        <small class="text-danger" id="languageError"></small>
+    </div>
+    <button type="submit" class="btn btn-success p-2 w-25 mt-2">Save</button>
+    {% if msg %}
+    <p class="text-danger">{{ msg }}</p>
+    {% endif %}
+</form>
+
+<script>
+    document.getElementById('createBookForm').addEventListener('submit', function(event) {
+        let valid = true;
+        const title = document.getElementById('title').value.trim();
+        const author = document.getElementById('author').value.trim();
+        const publishedDate = document.getElementById('published_date').value;
+        const isbn = document.getElementById('isbn').value.trim();
+        const pages = document.getElementById('pages').value.trim();
+        const language = document.getElementById('language').value;
+
+        // Clear previous error messages
+        document.getElementById('titleError').textContent = '';
+        document.getElementById('authorError').textContent = '';
+        document.getElementById('publishedDateError').textContent = '';
+        document.getElementById('isbnError').textContent = '';
+        document.getElementById('pagesError').textContent = '';
+        document.getElementById('languageError').textContent = '';
+
+        if (title === '') {
+            document.getElementById('titleError').textContent = 'Book title is required.';
+            valid = false;
+        }
+
+        if (author === '') {
+            document.getElementById('authorError').textContent = 'Author name is required.';
+            valid = false;
+        }
+
+        if (publishedDate === '') {
+            document.getElementById('publishedDateError').textContent = 'Published date is required.';
+            valid = false;
+        }
+
+        if (isbn === '') {
+            document.getElementById('isbnError').textContent = 'ISBN is required.';
+            valid = false;
+        }
+
+        if (pages === '' || isNaN(pages) || pages <= 0) {
+            document.getElementById('pagesError').textContent = 'Valid number of pages is required.';
+            valid = false;
+        }
+
+        if (language === '') {
+            document.getElementById('languageError').textContent = 'Language is required.';
+            valid = false;
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+</script>
+
+{% endblock %}

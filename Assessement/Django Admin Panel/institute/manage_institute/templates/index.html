@@ -1,205 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Manage Institute</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flaticon/2.1.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .sidebar {
-            background-color: #d81957;
-            min-height: 100vh;
-            color: white;
-        }
-        .sidebar a {
-            color: white;
-            font-size: 16px;
-        }
-        .sidebar .nav-link {
-            border-bottom: 1px solid #c7155f;
-        }
-        .main-content {
-            background-color: #f3f3f3;
-        }
-        .header {
-            background-color: #d81957;
-            color: white;
-        }
-        .dashboard-header {
-            background-color: #a0e8d2;
-            color: #d81957;
-            padding: 15px;
-        }
-        .card-custom {
-            background-color: #d81957;
-            color: white;
-            padding: 20px;
-        }
-        .dashboard-glance {
-            color: #d81957;
-            background-color: #f3f3f3;
-            padding: 10px;
-        }
-        .footer {
-            background-color: #d81957;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                                <i class="fas fa-tachometer-alt"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="flaticon-student"></i> Student <span class="badge badge-light">100</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="flaticon-teacher"></i> Teacher <span class="badge badge-light">30</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="flaticon-department"></i> Department <span class="badge badge-light">5</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="flaticon-campus"></i> Campus <span class="badge badge-light">3</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="flaticon-clubs"></i> Clubs <span class="badge badge-light">5</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="flaticon-parents"></i> Parents <span class="badge badge-light">20</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="flaticon-library"></i> Library <span class="badge badge-light">200</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="flaticon-routine"></i> Routine <span class="badge badge-light">20</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="flaticon-events"></i> Events <span class="badge badge-light">20</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+<!-- index.html -->
+{% extends 'base.html' %}
+{% load static %}
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content">
-                <div class="header">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="#">Dashy</a>
-                        <div class="collapse navbar-collapse">
-                            <ul class="navbar-nav mr-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Stuff</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Board</a>
-                                </li>
-                            </ul>
-                            <form class="form-inline my-2 my-lg-0">
-                                <button class="btn btn-outline-light my-2 my-sm-0" type="button">Login</button>
-                                <button class="btn btn-outline-light my-2 my-sm-0 ml-2" type="button">Register</button>
-                            </form>
-                        </div>
-                    </nav>
-                </div>
+{% block title %}Home{% endblock %}
 
-                <div class="dashboard-header mt-3">
-                    <h2>Dashboard Manage Institute</h2>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <div class="card-custom text-center">
-                            <h5>DPI Dashboard At A Glance</h5>
-                            <div class="row mt-4">
-                                <div class="col-md-3">
-                                    <i class="fas fa-user-graduate fa-2x"></i>
-                                    <p>2 students</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <i class="fas fa-chalkboard-teacher fa-2x"></i>
-                                    <p>5 teachers</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <i class="fas fa-users fa-2x"></i>
-                                    <p>5 clubs</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <i class="fas fa-book fa-2x"></i>
-                                    <p>1000 books</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <img src="event.jpg" class="card-img-top" alt="Event">
-                            <div class="card-body">
-                                <h5 class="card-title">DPI-Event-101</h5>
-                                <p class="card-text">Washington DC | Maricuri Park</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="dashboard-glance text-center">
-                            <p>No meeting scheduled</p>
-                        </div>
-                        <div class="dashboard-glance text-center mt-3">
-                            <p>ToDo List</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <p>Student Care: Absent <span class="badge badge-danger">10</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="footer mt-4">
-                    <p>DPI © 2019 Developed by tareqmomwer Powered by Django, Bootstrap4</p>
-                </div>
-            </main>
+{% block content %}
+<div class="container mt-5">
+    <div class="row dashboard-header">
+        <div class="col-sm">
+            <h2>Dashboard Manage Institute</h2>
         </div>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card-custom text-center">
+                <h5>DPI Dashboard At A Glance</h5>
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        <a href="{% url 'student_list' %}" style="color: white;">
+                            <i class="fas fa-user-graduate fa-2x"></i>
+                            <p>{{ total_students }} students</p>
+                            <a href="{% url 'create' %}" class="btn btn-success w-50">Create</a>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'teacher_list' %}" style="color: white;">
+                            <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                            <p>{{ total_teachers }} teachers</p>
+                            <a href="{% url 'create_teacher' %}" class="btn btn-success w-50">Create</a>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'club_list' %}" style="color: white;">
+                            <i class="fas fa-users fa-2x"></i>
+                            <p>{{ total_clubs }} clubs</p>
+                            <a href="{% url 'create_club' %}" class="btn btn-success w-50">Create</a>
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'book_list' %}" style="color: white;">
+                            <i class="fas fa-book fa-2x"></i>
+                            <p>{{ total_books }} books</p>
+                            <a href="{% url 'create_book' %}" class="btn btn-success w-50">Create</a>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <img src="https://www.shutterstock.com/shutterstock/videos/1108169311/thumb/1.jpg?ip=x480" class="card-img-top" alt="Event">
+                <div class="card-body">
+                    <h5 class="card-title">DPI-Event-101</h5>
+                    <p class="card-text">Washington DC | Maricuri Park</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-glance text-center">
+                <p>No meeting scheduled</p>
+            </div>
+            <div class="dashboard-glance text-center mt-3">
+                <p>ToDo List</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <p>Student Care: Absent <span class="badge badge-danger">10</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer mt-4">
+        <p>DPI © 2019 Developed by tareqmomwer Powered by Django, Bootstrap4</p>
+    </div>
+</div>
+{% endblock %}

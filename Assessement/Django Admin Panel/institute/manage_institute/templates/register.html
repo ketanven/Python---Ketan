@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Register Here!!{% endblock %}
+
+{% block content %}
+<h2>Register Here!!</h2>
+<form method="post" action="{% url 'signup' %}" id="signupForm" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12">
+            <div class="table">
+                <tr>
+                    <td>Upload Your Profile Pic</td>
+                    <td><input name="profile" class="m-2" type="file" required></td>
+                </tr>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-black" for="name">Full Name</label>
+                <input type="text" name="name" class="form-control" id="name">
+                <small class="text-danger" id="nameError"></small>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-black" for="email">Email Address</label>
+                <input type="email" name="email" class="form-control" id="email">
+                <small class="text-danger" id="emailError"></small>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-black" for="password">Password</label>
+                <input type="password" name="password" class="form-control" id="password">
+                <small class="text-danger" id="passwordError"></small>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-black" for="cpassword">Confirm Password</label>
+                <input type="password" name="cpassword" class="form-control" id="cpassword">
+                <small class="text-danger" id="cpasswordError"></small>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-black" for="mobile">Mobile No</label>
+                <input type="tel" name="mobile" class="form-control" id="mobile">
+                <small class="text-danger" id="mobileError"></small>
+            </div>
+        </div>
+        
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-black" for="institute">Institute Name</label>
+                <input type="text" name="institute" class="form-control" id="institute">
+                <small class="text-danger" id="instituteError"></small>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary w-25 mt-3">Sign Up</button>
+</form>
+
+{% if msg %}
+<h1 class="mt-3 text-danger">{{ msg }}</h1>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,36 @@
+<!-- manage_institute/templates/club_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Clubs{% endblock %}
+
+{% block content %}
+<h2 class="pt-3 mb-3 text-center">Clubs</h2>
+<a href="{% url 'create_club' %}" class="btn btn-success w-25 mb-3">Create</a>
+<table style="border: 2px solid pink; box-shadow: 0px 0px 0px 5px pink;" class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Founded Date</th>
+            <th>President</th>
+            <th>Members Count</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for club in clubs %}
+        <tr>
+            <td>{{ club.name }}</td>
+            <td>{{ club.description }}</td>
+            <td>{{ club.founded_date }}</td>
+            <td>{{ club.president }}</td>
+            <td>{{ club.members_count }}</td>
+            <td>
+                <a href="{% url 'edit_club' club.id %}" class="btn btn-info">Edit</a>
+                <a href="{% url 'delete_club' club.id %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

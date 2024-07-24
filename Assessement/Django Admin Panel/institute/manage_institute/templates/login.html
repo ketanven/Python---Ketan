@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Start Hero Section -->
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <div class="intro-excerpt">
+                    <h1>Login to Your Institute Account</h1>
+                    <p class="mb-4">Access your dashboard and manage your profile, courses, and more.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 d-flex justify-content-center">
+                <img src="{% static 'images/institute.png' %}" class="img-fluid" alt="Institute" style="max-height: 200px;">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                {% if msg %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{ msg }}
+                </div>
+                {% endif %}
+                <form method="post" action="{% url 'login' %}" id="loginForm">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" name="email" class="form-control" id="email" required>
+                        <small class="text-danger" id="emailError"></small>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" id="password" required>
+                        <small class="text-danger" id="passwordError"></small>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    var formIsValid = true;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    var emailError = document.getElementById('emailError');
+    var passwordError = document.getElementById('passwordError');
+
+    emailError.textContent = '';
+    passwordError.textContent = '';
+
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        emailError.textContent = 'Invalid email address.';
+        formIsValid = false;
+    }
+
+    if (password.trim() === '') {
+        passwordError.textContent = 'Password is required.';
+        formIsValid = false;
+    }
+
+    if (!formIsValid) {
+        event.preventDefault();
+    }
+});
+</script>
+{% endblock %}
