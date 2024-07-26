@@ -20,7 +20,7 @@ print()  # Move to the next line after printing the series
 
 n  = int(input("** Enter the maximum value for Fibonacci series: "))
 n1 = 0
-n2 = 0
+n2 = 1
 
 print(n1)
 print(n2)
