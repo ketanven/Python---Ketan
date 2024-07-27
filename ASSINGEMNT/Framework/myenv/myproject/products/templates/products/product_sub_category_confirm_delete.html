@@ -1,0 +1,37 @@
+{% extends "products/base_generic.html" %}
+
+{% block title %}Delete Subcategory{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-4">Confirm Delete</h2>
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                Confirm Delete
+            </div>
+            <div class="card-body" style="font-family: 'Arial', sans-serif; background-color: #f8f9fa;">
+                <p>Are you sure you want to delete the subcategory: <strong>{{ sub_category.product.product_name }} - {{ sub_category.model }}</strong>?</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a href="{% url 'product_list' %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom CSS -->
+    <style>
+        .container {
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #e9ecef;
+        }
+    </style>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+{% endblock %}

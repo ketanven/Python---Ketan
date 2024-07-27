@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Subcategory Management</title>
+</head>
+<body>
+    <h1>Product Subcategory Management</h1>
+
+    <!-- Product List -->
+    <h2>Product List</h2>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.product_id }} - {{ product.product_name }}</li>
+        {% empty %}
+            <li>No products found.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Create New Subcategory Form -->
+    <h2>Create New Subcategory</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ create_form.as_p }}
+        <button type="submit">Create</button>
+    </form>
+
+    <!-- Search Form for Subcategories -->
+    <h2>Search Subcategories</h2>
+    <form method="get" action=".">
+        <input type="text" name="search" placeholder="Search subcategories" value="{{ request.GET.search }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- List of Subcategories -->
+    <h2>Existing Subcategories</h2>
+    <ul>
+        {% for sub_category in sub_categories %}
+            <li>
+                {{ sub_category.product.product_name }} - {{ sub_category.model }} - {{ sub_category.price }}
+                <a href="{% url 'product_sub_category_update' sub_category.pk %}">Edit</a>
+                <a href="{% url 'product_sub_category_delete' sub_category.pk %}">Delete</a>
+            </li>
+        {% empty %}
+            <li>No subcategories found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Subcategory Management</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+        .card-body {
+            background-color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .list-group-item {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Product Subcategory Management</h1>
+
+        <!-- Product List -->
+        <h2 class="mb-3">Product List</h2>
+        <div class="card mb-4">
+            <div class="card-header">
+                Product List
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for product in products %}
+                        <li class="list-group-item">
+                            <strong>{{ product.product_id }}</strong> - {{ product.product_name }}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">No products found.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Create New Subcategory Form -->
+        <h2 class="mb-3">Create New Subcategory</h2>
+        <div class="card mb-4">
+            <div class="card-header">
+                Create New Subcategory
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ create_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Search Form for Subcategories -->
+        <h2 class="mb-3">Search Subcategories</h2>
+        <div class="card mb-4">
+            <div class="card-header">
+                Search Subcategories
+            </div>
+            <div class="card-body">
+                <form method="get" action=".">
+                    <div class="form-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search subcategories" value="{{ request.GET.search }}">
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- List of Subcategories -->
+        <h2 class="mb-3">Existing Subcategories</h2>
+        <div class="card mb-4">
+            <div class="card-header">
+                Existing Subcategories
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for sub_category in sub_categories %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ sub_category.product.product_name }} - {{ sub_category.model }} - {{ sub_category.price }}
+                            <div>
+                                <a href="{% url 'product_sub_category_update' sub_category.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{% url 'product_sub_category_delete' sub_category.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">No subcategories found.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
