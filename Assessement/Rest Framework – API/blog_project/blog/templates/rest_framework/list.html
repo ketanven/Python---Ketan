@@ -1,0 +1,19 @@
+{% extends "rest_framework/base.html" %}
+{% block content %}
+    <h1>{{ view.get_view_name() }}</h1>
+    <form method="get" action=".">
+        <input type="hidden" name="format" value="api">
+        <button type="submit">GET</button>
+    </form>
+    <form method="post" action=".">
+        <input type="hidden" name="format" value="api">
+        <button type="submit">POST</button>
+    </form>
+    <ul>
+    {% for obj in data %}
+        <li>
+            <a href="{{ view.get_serializer(instance=obj).data.url }}">{{ obj.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

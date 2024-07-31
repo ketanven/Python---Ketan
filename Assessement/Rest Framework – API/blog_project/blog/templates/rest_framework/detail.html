@@ -1,0 +1,18 @@
+{% extends "rest_framework/base.html" %}
+{% block content %}
+    <h1>{{ view.get_view_name() }}</h1>
+    <form method="get" action=".">
+        <input type="hidden" name="format" value="api">
+        <button type="submit">GET</button>
+    </form>
+    <form method="post" action=".">
+        <input type="hidden" name="_method" value="put">
+        <input type="hidden" name="format" value="api">
+        <button type="submit">PUT</button>
+    </form>
+    <form method="post" action=".">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="format" value="api">
+        <button type="submit">DELETE</button>
+    </form>
+{% endblock %}

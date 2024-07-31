@@ -30,4 +30,4 @@ for i in range(3,n+1):
     print(n3)
     n1=n2
     n2=n3
-    print()  # Move to the next line after printing the series
+    print()  
