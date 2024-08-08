@@ -1,17 +1,17 @@
 from django.urls import path
 from .views import (
-    PostListCreateView,
-    PostRetrieveUpdateDestroyView,
-    CommentListCreateView,
-    CommentRetrieveUpdateDestroyView
+    post_list_create_view,
+    post_retrieve_update_destroy_view,
+    comment_list_create_view,
+    comment_retrieve_update_destroy_view
 )
 
 urlpatterns = [
     # Post URLs
-    path('posts/', PostListCreateView.as_view(), name='post-list-create'),  # List all posts or create a new post
-    path('posts/<int:pk>/', PostRetrieveUpdateDestroyView.as_view(), name='post-detail'),  # Retrieve, update, or delete a specific post
+    path('posts/', post_list_create_view, name='post-list-create'),  # List all posts or create a new post
+    path('posts/<int:pk>/', post_retrieve_update_destroy_view, name='post-detail'),  # Retrieve, update, or delete a specific post
 
     # Comment URLs
-    path('comments/', CommentListCreateView.as_view(), name='comment-list-create'),  # List all comments or create a new comment
-    path('comments/<int:pk>/', CommentRetrieveUpdateDestroyView.as_view(), name='comment-detail'),  # Retrieve, update, or delete a specific comment
+    path('comments/', comment_list_create_view, name='comment-list-create'),  # List all comments or create a new comment
+    path('comments/<int:pk>/', comment_retrieve_update_destroy_view, name='comment-detail'),  # Retrieve, update, or delete a specific comment
 ]
